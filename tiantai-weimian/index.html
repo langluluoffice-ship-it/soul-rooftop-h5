@@ -1,0 +1,2058 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>天台未眠</title>
+  <style>
+    :root {
+      --night: #0b0a2c;
+      --night-2: #151047;
+      --cyan: #36eaff;
+      --coral: #ff7f92;
+      --violet: #a76cff;
+      --blue: #2f83ff;
+      --cream: #fff2de;
+      --white: #f8fbff;
+      --muted: rgba(239, 246, 255, .7);
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: #08071f;
+      color: var(--white);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    button { font: inherit; color: inherit; }
+
+    .phone {
+      position: relative;
+      width: min(100vw, 390px);
+      height: min(100dvh, 844px);
+      min-height: 720px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 78%, rgba(60, 95, 255, .2), transparent 32%),
+        linear-gradient(180deg, #0e0b35 0%, #120e42 52%, #090922 100%);
+      isolation: isolate;
+    }
+
+    .hero {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 48%;
+      overflow: hidden;
+      border-radius: 0 0 48px 30px;
+      background-image:
+        linear-gradient(180deg, rgba(8, 8, 39, .16) 0%, rgba(8, 8, 39, .12) 52%, rgba(8, 8, 39, .84) 100%),
+        url("assets/rooftop-cobalt-reference.png");
+      background-size: cover;
+      background-position: center top;
+      box-shadow: 0 24px 50px rgba(3, 3, 20, .38);
+      cursor: pointer;
+    }
+
+    .hero:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: -4px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 86% 20%, rgba(255, 134, 154, .2), transparent 22%),
+        linear-gradient(90deg, rgba(7, 7, 34, .28), transparent 42%, rgba(7, 7, 34, .08));
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: calc(env(safe-area-inset-top) + 14px) 18px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 760;
+      letter-spacing: .04em;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, .34);
+    }
+
+    .brand-mark {
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px 9px 9px 3px;
+      color: #05091b;
+      background: var(--cyan);
+      box-shadow: 0 0 20px rgba(54, 234, 255, .55);
+      font: 900 14px/1 Arial;
+    }
+
+    .top-actions { display: flex; gap: 9px; }
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      background: rgba(9, 9, 41, .28);
+      backdrop-filter: blur(10px);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 4;
+      padding: 15px 20px 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 10px;
+      font-weight: 780;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.78);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 2px;
+      background: var(--cyan);
+      box-shadow: 0 0 12px rgba(54,234,255,.8);
+    }
+
+    h1 {
+      margin: 11px 0 0;
+      font-size: 40px;
+      line-height: 1;
+      letter-spacing: -.06em;
+      font-weight: 900;
+      text-shadow: 0 4px 24px rgba(0,0,0,.36);
+    }
+
+    .tagline {
+      margin-top: 9px;
+      color: rgba(255,255,255,.82);
+      font-size: 13px;
+      letter-spacing: .04em;
+      text-shadow: 0 2px 12px rgba(0,0,0,.44);
+    }
+
+    .hero-firework-hint {
+      position: absolute;
+      z-index: 5;
+      left: 20px;
+      bottom: 22px;
+      display: grid;
+      grid-template-columns: 36px auto 18px;
+      align-items: center;
+      gap: 10px;
+      min-width: 194px;
+      padding: 7px 10px 7px 7px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(9,17,63,.58), rgba(22,26,85,.2));
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 26px rgba(4,7,35,.24), inset 0 0 0 1px rgba(54,234,255,.04);
+      pointer-events: none;
+    }
+
+    .firework-orb {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #152052;
+      background: linear-gradient(145deg, #fff6d7, #8fefff 72%);
+      box-shadow: 0 0 18px rgba(54,234,255,.38);
+      font-size: 17px;
+      animation: orbBreathe 2.4s ease-in-out infinite;
+    }
+
+    .firework-orb::before,
+    .firework-orb::after {
+      content: "";
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #fff7cf;
+      box-shadow: 0 -8px 0 #fff7cf, 7px -4px 0 var(--cyan), 8px 4px 0 #ffc98b, -7px 5px 0 #fff;
+      animation: hintSpark 2.4s ease-out infinite;
+    }
+
+    .firework-orb::after { animation-delay: 1.2s; transform: rotate(40deg); }
+
+    @keyframes orbBreathe { 50% { transform: scale(1.06); box-shadow: 0 0 25px rgba(54,234,255,.55); } }
+    @keyframes hintSpark { 0%, 42% { opacity: 0; transform: scale(.2); } 58% { opacity: .9; } 100% { opacity: 0; transform: scale(1.15); } }
+
+    .hero-firework-copy { display: flex; flex-direction: column; gap: 2px; }
+    .hero-firework-copy b { color: white; font-size: 12px; line-height: 1.2; letter-spacing: .02em; }
+    .hero-firework-copy small { color: rgba(255,255,255,.58); font-size: 9px; line-height: 1.2; }
+    .hero-firework-arrow { color: rgba(255,255,255,.62); font-size: 20px; font-weight: 300; }
+
+    .hero.fireworks-ready .hero-firework-hint {
+      border-color: rgba(255,221,151,.44);
+      background: linear-gradient(90deg, rgba(75,44,70,.64), rgba(26,33,90,.24));
+    }
+
+    .hero.fireworks-ready .firework-orb {
+      background: linear-gradient(145deg, #fff8dd, #ffd18f 65%, #8beeff);
+      box-shadow: 0 0 22px rgba(255,201,139,.52);
+    }
+
+    .hero-firework-hint::after {
+      content: attr(data-charge);
+      position: absolute;
+      right: 18px;
+      top: -9px;
+      color: #fff4c8;
+      font-size: 11px;
+      font-weight: 850;
+      opacity: 0;
+      transform: translateY(5px) scale(.8);
+      text-shadow: 0 0 12px rgba(255,211,139,.8);
+      pointer-events: none;
+    }
+
+    .hero.charging .hero-firework-hint {
+      border-color: rgba(255,239,190,.58);
+      box-shadow: 0 10px 30px rgba(4,7,35,.28), 0 0 24px rgba(54,234,255,.2);
+    }
+
+    .hero.charging .firework-orb { animation: chargePop .62s cubic-bezier(.16,.82,.25,1); }
+    .hero.charging .hero-firework-hint::after { animation: chargeNumber .72s ease-out both; }
+
+    @keyframes chargePop {
+      0% { transform: scale(.86); }
+      44% { transform: scale(1.22) rotate(12deg); box-shadow: 0 0 32px rgba(255,225,155,.78); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes chargeNumber {
+      0% { opacity: 0; transform: translateY(7px) scale(.8); }
+      28% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-18px) scale(1.05); }
+    }
+
+    .progress-wrap {
+      position: relative;
+      z-index: 4;
+      margin: 12px 20px 0;
+      padding: 2px 1px 7px;
+    }
+
+    .progress-meta {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 7px;
+      font-size: 10px;
+      color: rgba(255,255,255,.68);
+    }
+
+    .progress-meta strong { color: white; font-size: 12px; }
+
+    .progress-track {
+      position: relative;
+      height: 4px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.2);
+      overflow: visible;
+    }
+
+    .progress-value {
+      width: 88%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--cyan), #70a4ff 55%, #ff93b7);
+      box-shadow: 0 0 14px rgba(54,234,255,.7);
+      transition: width .65s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .progress-star {
+      position: absolute;
+      left: calc(88% - 6px);
+      top: -5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 7px white, 0 0 18px var(--cyan);
+      transition: left .65s cubic-bezier(.2,.8,.2,1);
+      animation: progressPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes progressPulse { 50% { transform: scale(1.35); box-shadow: 0 0 10px white, 0 0 24px var(--cyan); } }
+
+    .video-stage {
+      position: relative;
+      z-index: 3;
+      height: 172px;
+      margin: 11px 16px 0;
+      overflow: hidden;
+      border-radius: 15px 32px 23px 27px;
+      background:
+        linear-gradient(180deg, rgba(10,9,42,.04), rgba(10,9,42,.46)),
+        url("assets/rooftop-night.png") center 24% / 128% auto;
+      box-shadow: 0 18px 46px rgba(2, 2, 19, .5), inset 0 0 0 1px rgba(255,255,255,.13);
+      transform: perspective(800px) rotate(-.35deg);
+    }
+
+    .video-stage::before,
+    .video-stage::after {
+      content: "";
+      position: absolute;
+      width: 110px;
+      height: 4px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, transparent, #ff8eaf 40%, #fff3e4 64%, transparent);
+      filter: drop-shadow(0 0 5px rgba(255,128,164,.7));
+      transform: rotate(18deg);
+      animation: comet 4.8s linear infinite;
+    }
+
+    .video-stage::before { left: -120px; top: 33px; }
+    .video-stage::after { left: -160px; top: 83px; animation-delay: 2.1s; }
+
+    .video-stage.completed {
+      background:
+        radial-gradient(circle at 24% 35%, rgba(255,125,153,.46), transparent 18%),
+        radial-gradient(circle at 72% 28%, rgba(54,234,255,.4), transparent 21%),
+        linear-gradient(180deg, rgba(10,9,42,.03), rgba(10,9,42,.5)),
+        url("assets/rooftop-night.png") center 24% / 128% auto;
+      box-shadow: 0 18px 48px rgba(255,100,154,.16), inset 0 0 0 1px rgba(255,255,255,.2);
+    }
+
+    .video-stage.completed .play {
+      box-shadow: 0 9px 22px rgba(0,0,0,.28), 0 0 0 7px rgba(54,234,255,.14), 0 0 24px rgba(54,234,255,.35);
+    }
+
+    @keyframes comet {
+      0% { transform: translateX(0) translateY(0) rotate(18deg); opacity: 0; }
+      14% { opacity: 1; }
+      68% { opacity: .9; }
+      100% { transform: translateX(520px) translateY(130px) rotate(18deg); opacity: 0; }
+    }
+
+    .video-kicker {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      font-size: 11px;
+      color: rgba(255,255,255,.78);
+    }
+
+    .video-kicker b { display: block; margin-top: 2px; color: white; font-size: 15px; }
+
+    .play {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      width: 43px;
+      height: 43px;
+      border: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.9);
+      color: #151042;
+      box-shadow: 0 9px 22px rgba(0,0,0,.28), 0 0 0 6px rgba(255,255,255,.11);
+      cursor: pointer;
+      transition: transform .2s ease;
+    }
+
+    .play:active { transform: scale(.92); }
+    .play .pause-bars { display: none; letter-spacing: 1px; font-size: 11px; }
+    .playing .play-triangle { display: none; }
+    .playing .pause-bars { display: block; }
+
+    .content-zone {
+      position: absolute;
+      z-index: 6;
+      left: 0;
+      right: 0;
+      top: 48%;
+      bottom: 0;
+      padding: 99px 0 0;
+    }
+
+    .content-zone > .progress-wrap {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      top: 12px;
+      margin: 0;
+      padding: 0 0 9px;
+    }
+
+    .phone.event-unlocked .content-zone { padding-top: 62px; }
+    .phone.event-unlocked .content-zone > .progress-wrap { display: none; }
+    .phone.event-unlocked .zone-head { top: 28px; }
+
+    .content-zone::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 330px;
+      height: 190px;
+      right: -150px;
+      top: 26px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,115,154,.18), transparent 66%);
+      filter: blur(2px);
+    }
+
+    .zone-head {
+      position: absolute;
+      left: 20px;
+      right: 18px;
+      top: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+
+    .zone-head::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      opacity: .42;
+      background: linear-gradient(90deg, rgba(54,234,255,.8), rgba(255,255,255,.08), transparent);
+    }
+
+    .zone-head strong {
+      display: flex;
+      align-items: center;
+      padding: 0;
+      background: none;
+      color: rgba(255,255,255,.94);
+      font-size: 14px;
+      letter-spacing: .04em;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .zone-head strong::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 12px rgba(54,234,255,.72);
+    }
+
+    .zone-head span { display: none; }
+
+    .portal-grid {
+      position: relative;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1.55fr .92fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0;
+      overflow: hidden;
+      isolation: isolate;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .portal-grid::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(54,234,255,.13), transparent 26%),
+        radial-gradient(circle at 14% 88%, rgba(244,180,92,.14), transparent 28%);
+      pointer-events: none;
+    }
+
+    .portal-grid::after {
+      content: "";
+      position: absolute;
+      z-index: 8;
+      left: 61.5%;
+      top: -12%;
+      width: 2px;
+      height: 128%;
+      opacity: .25;
+      background: linear-gradient(180deg, transparent, rgba(255,255,255,.82) 25%, rgba(54,234,255,.58) 72%, transparent);
+      transform: rotate(7deg);
+      pointer-events: none;
+    }
+
+    .portal {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      border: 0;
+      padding: 0;
+      text-align: left;
+      cursor: pointer;
+      background: transparent;
+      box-shadow: none;
+      transition: transform .22s ease, filter .22s ease;
+    }
+
+    .portal:active { filter: brightness(1.13); }
+
+    .stories {
+      grid-row: 1 / 3;
+      border-radius: 0;
+      z-index: 3;
+      width: calc(100% + 26px);
+      padding-right: 26px;
+      clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%);
+      background:
+        radial-gradient(circle at 82% 18%, rgba(244,194,116,.26), transparent 24%),
+        linear-gradient(150deg, #2850ad 0%, #1d3989 46%, #101f5e 100%);
+    }
+
+    .stories::before {
+      content: "";
+      position: absolute;
+      width: 205px;
+      height: 154px;
+      left: -48px;
+      bottom: -37px;
+      border-radius: 44% 56% 60% 40%;
+      background: #17417f;
+      transform: rotate(9deg);
+      box-shadow: 96px -250px 0 -45px rgba(244,183,95,.18);
+    }
+
+    .tape {
+      border-radius: 0;
+      z-index: 2;
+      margin-left: -10px;
+      padding-left: 10px;
+      clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
+      background: linear-gradient(145deg, #3152a7 0%, #29458f 50%, #1b2e6c 100%);
+      box-shadow: inset 0 -1px rgba(255,255,255,.18);
+    }
+
+    .tape::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 76% 16%, rgba(244,184,96,.18), transparent 34%),
+        linear-gradient(180deg, rgba(54,234,255,.06), transparent 68%);
+    }
+
+    .guest {
+      border-radius: 0;
+      z-index: 2;
+      margin-left: -10px;
+      padding-left: 10px;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 100%);
+      background: linear-gradient(150deg, #1c6f9d 0%, #20528d 46%, #142d69 100%);
+    }
+
+    .guest::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 72% 18%, rgba(54,234,255,.22), transparent 42%);
+    }
+
+    .portal-label {
+      position: absolute;
+      z-index: 4;
+      left: 16px;
+      right: 12px;
+      bottom: 15px;
+    }
+
+    .portal-label small {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 9px;
+      color: rgba(255,255,255,.68);
+    }
+
+    .portal-label b {
+      display: block;
+      font-size: 25px;
+      line-height: 1.04;
+      letter-spacing: -.06em;
+    }
+
+    .tape .portal-label, .guest .portal-label { left: 24px; bottom: 11px; }
+    .tape .portal-label b, .guest .portal-label b { font-size: 16px; letter-spacing: -.04em; }
+    .tape .portal-label small, .guest .portal-label small { font-size: 8px; }
+
+    .story-paper {
+      position: absolute;
+      width: 146px;
+      height: 112px;
+      top: 36px;
+      left: 29px;
+      padding: 14px;
+      border-radius: 15px;
+      color: #142759;
+      background: #f5e6bd;
+      transform: rotate(-3deg);
+      box-shadow: 0 14px 28px rgba(13, 7, 59, .28);
+    }
+
+    .story-paper::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 9px -15px -7px 15px;
+      border-radius: 13px;
+      background: #b9d3ea;
+      transform: rotate(8deg);
+    }
+
+    .story-paper::after {
+      content: "";
+      position: absolute;
+      z-index: -2;
+      inset: -8px 16px 15px -13px;
+      border-radius: 13px;
+      background: #edd9a8;
+      transform: rotate(-6deg);
+    }
+
+    .avatar-row { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 760; }
+    .avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #f5bd69, #36d6e7 72%);
+      border: 2px solid rgba(255,255,255,.85);
+    }
+    .paper-line { height: 4px; margin-top: 10px; border-radius: 8px; background: rgba(43,33,88,.16); }
+    .paper-line.short { width: 65%; margin-top: 6px; }
+
+    .story-sticker {
+      position: absolute;
+      z-index: 4;
+      right: 24px;
+      top: 164px;
+      padding: 5px 8px;
+      border-radius: 9px 9px 9px 2px;
+      color: #14103e;
+      background: var(--cyan);
+      font-size: 9px;
+      font-weight: 850;
+      transform: rotate(-5deg);
+      box-shadow: 0 7px 16px rgba(6,17,48,.25);
+    }
+
+    .stories .portal-label {
+      left: 30px;
+      right: 24px;
+      bottom: 31px;
+    }
+
+    .stories .portal-label small {
+      max-width: 165px;
+      margin-bottom: 10px;
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .stories .portal-label b {
+      font-size: 27px;
+      line-height: 1.06;
+    }
+
+    .record {
+      position: absolute;
+      width: 88px;
+      height: 88px;
+      right: -14px;
+      top: -15px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, #f6ca83 0 7%, #172552 8% 18%, #4dcfe2 19% 22%, #14204a 23% 48%, #304778 49% 51%, #101938 52% 100%);
+      box-shadow: 0 12px 28px rgba(35,14,71,.34);
+      animation: spin 9s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .wave {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      left: 13px;
+      top: 22px;
+      height: 26px;
+    }
+
+    .wave i {
+      width: 2px;
+      border-radius: 4px;
+      background: rgba(255,255,255,.9);
+      animation: pulse 1.2s ease-in-out infinite alternate;
+    }
+
+    .wave i:nth-child(1) { height: 8px; }
+    .wave i:nth-child(2) { height: 20px; animation-delay: .18s; }
+    .wave i:nth-child(3) { height: 13px; animation-delay: .32s; }
+    .wave i:nth-child(4) { height: 25px; animation-delay: .1s; }
+    .wave i:nth-child(5) { height: 11px; animation-delay: .25s; }
+    @keyframes pulse { to { transform: scaleY(.45); opacity: .55; } }
+
+    .guest-portrait {
+      position: absolute;
+      width: 90px;
+      height: 122px;
+      right: -7px;
+      top: -2px;
+    }
+    .guest-portrait::before {
+      content: "";
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      right: 23px;
+      top: 5px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #ffd7bc, #e89a9d);
+      box-shadow: 0 0 0 8px rgba(54,234,255,.09);
+    }
+    .guest-portrait::after {
+      content: "";
+      position: absolute;
+      width: 78px;
+      height: 80px;
+      right: 0;
+      bottom: 0;
+      border-radius: 48% 52% 8px 8px;
+      background: linear-gradient(145deg, #4bc9df, #725ee0 70%);
+      clip-path: polygon(15% 100%, 4% 42%, 26% 4%, 76% 5%, 97% 47%, 88% 100%);
+    }
+
+    .mini-play {
+      position: absolute;
+      z-index: 5;
+      right: 12px;
+      bottom: 14px;
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: white;
+      color: #173f86;
+      font-size: 10px;
+      box-shadow: 0 5px 14px rgba(0,0,0,.22);
+    }
+
+    .shooting-dot {
+      position: absolute;
+      z-index: 2;
+      top: 18%;
+      left: 54%;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 38px 22px 0 #88bdff, 106px -4px 0 #ffd794, -42px 66px 0 #fff, 76px 92px 0 rgba(255,255,255,.8);
+      animation: twinkle 4.8s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { to { opacity: .48; transform: translateY(-5px) scale(.86); } }
+
+    .overlay {
+      position: absolute;
+      z-index: 30;
+      inset: 0;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: max(92px, 13vh);
+      visibility: hidden;
+      opacity: 0;
+      background: rgba(7,6,29,.42);
+      backdrop-filter: blur(20px);
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+    .overlay.open { visibility: visible; opacity: 1; }
+    .sheet {
+      position: relative;
+      min-height: 60%;
+      max-height: calc(100% - 36px);
+      padding: 24px;
+      overflow-y: auto;
+      border-radius: 28px;
+      background: rgba(18,15,71,.72);
+      box-shadow: 0 20px 60px rgba(0,0,0,.34), inset 0 0 0 1px rgba(255,255,255,.1);
+      transform: translateY(18px) scale(.985);
+      transition: transform .28s ease;
+    }
+    .overlay.open .sheet { transform: translateY(0) scale(1); }
+    .sheet h2 { margin: 2px 0 8px; font-size: 30px; }
+    .sheet p { margin: 0; max-width: 90%; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 32px;
+      height: 32px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      cursor: pointer;
+    }
+    .demo-content {
+      margin-top: 4px;
+      min-height: 250px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: rgba(255,255,255,.8);
+      font-size: 13px;
+      overflow: hidden;
+      box-shadow: none;
+    }
+
+    .experience-visual {
+      position: relative;
+      flex: 1;
+      min-height: 175px;
+      padding: 18px 2px 22px;
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,.1);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      border-radius: 0;
+      background: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .experience-visual.long {
+      min-height: 292px;
+      justify-content: flex-start;
+    }
+
+    .experience-visual::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: -55px;
+      top: -70px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(54,234,255,.16), transparent 67%);
+    }
+
+    .experience-tag {
+      position: relative;
+      z-index: 2;
+      align-self: flex-start;
+      margin-bottom: auto;
+      padding: 0;
+      border-radius: 0;
+      background: none;
+      color: rgba(54,234,255,.78);
+      font-size: 10px;
+      letter-spacing: .05em;
+    }
+
+    .experience-author {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 18px;
+      padding-right: 44px;
+    }
+
+    .experience-avatar {
+      width: 30px;
+      height: 30px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 36% 30%, #fff3de 0 13%, transparent 14%),
+        linear-gradient(145deg, #ff8298, #7655e8 68%, #36eaff);
+      border: 2px solid rgba(255,255,255,.7);
+      box-shadow: 0 0 0 4px rgba(54,234,255,.06);
+    }
+
+    .experience-author b {
+      color: rgba(255,255,255,.9);
+      font-size: 13px;
+      font-weight: 680;
+    }
+
+    .experience-author time {
+      margin-left: auto;
+      color: rgba(255,255,255,.38);
+      font-size: 10px;
+    }
+
+    .experience-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 92%;
+      font-size: 20px;
+      line-height: 1.45;
+      color: white;
+      font-weight: 760;
+    }
+
+    .experience-copy.long-story {
+      max-width: 100%;
+      font-size: 14px;
+      line-height: 1.82;
+      letter-spacing: .015em;
+      color: rgba(255,255,255,.86);
+      font-weight: 450;
+    }
+
+    .experience-meta {
+      position: relative;
+      z-index: 2;
+      margin-top: 6px;
+      font-size: 10px;
+      color: rgba(255,255,255,.56);
+    }
+
+    .experience-actions { display: flex; align-items: center; gap: 22px; margin-top: 13px; padding: 0 2px; }
+
+    .experience-action,
+    .experience-comment,
+    .experience-next {
+      width: auto;
+      height: auto;
+      padding: 8px 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      color: rgba(255,255,255,.58);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 620;
+    }
+
+    .experience-action {
+      flex: none;
+      color: rgba(255,255,255,.74);
+      box-shadow: none;
+    }
+
+    .experience-action.done { background: none; color: rgba(255,127,146,.9); }
+    .experience-next { margin-left: auto; color: rgba(255,255,255,.5); }
+
+    .overlay.mode-audio {
+      background:
+        linear-gradient(180deg, rgba(4,18,58,.24), rgba(4,14,48,.72)),
+        url("assets/rooftop-cobalt-reference.png") left top / cover;
+      backdrop-filter: blur(8px);
+    }
+
+    .overlay.mode-audio .sheet {
+      min-height: 68%;
+      background: rgba(30,61,145,.46);
+      box-shadow: 0 20px 62px rgba(0,0,0,.3), inset 0 0 0 1px rgba(188,218,255,.28);
+      backdrop-filter: blur(18px);
+    }
+
+    .overlay.mode-audio .demo-content {
+      min-height: 0;
+      margin-top: 6px;
+      overflow: visible;
+    }
+
+    .audio-profile {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .audio-avatar {
+      grid-row: 1 / 3;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 38%, #06163d 0 22%, transparent 23%),
+        radial-gradient(ellipse at 50% 82%, #071432 0 35%, transparent 36%),
+        linear-gradient(145deg, #2c86d5, #252779 70%);
+      border: 1px solid rgba(255,255,255,.62);
+      box-shadow: 0 0 0 5px rgba(54,234,255,.07);
+    }
+
+    .audio-profile b { align-self: end; font-size: 16px; color: white; }
+    .audio-profile time { align-self: start; font-size: 11px; color: rgba(255,255,255,.52); }
+
+    .audio-tags {
+      grid-column: 2;
+      display: flex;
+      gap: 6px;
+      margin-top: 5px;
+    }
+
+    .audio-tags span {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.6);
+      font-size: 9px;
+    }
+
+    .audio-copy {
+      margin-top: 24px;
+      color: rgba(255,255,255,.87);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .audio-copy p { max-width: 100%; margin: 0 0 12px; color: inherit; font-size: inherit; line-height: inherit; }
+
+    .audio-player {
+      display: grid;
+      grid-template-columns: 46px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .audio-play {
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 22px rgba(54,234,255,.12);
+    }
+
+    .audio-waveform {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .audio-waveform i {
+      width: 2px;
+      height: var(--bar, 12px);
+      border-radius: 3px;
+      background: rgba(225,238,255,.84);
+      transform-origin: center;
+    }
+
+    .audio-player.playing .audio-waveform i { animation: audioWave .7s ease-in-out infinite alternate; }
+    .audio-player.playing .audio-waveform i:nth-child(3n) { animation-delay: .18s; }
+    .audio-player.playing .audio-waveform i:nth-child(2n) { animation-delay: .34s; }
+    @keyframes audioWave { to { transform: scaleY(.45); opacity: .45; } }
+
+    .audio-duration { color: rgba(255,255,255,.58); font-size: 11px; }
+
+    .audio-swipe {
+      margin: 24px 0 0;
+      text-align: center;
+      color: rgba(255,255,255,.42);
+      font-size: 11px;
+      letter-spacing: .04em;
+    }
+
+    .audio-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .audio-actions button {
+      height: 46px;
+      border: 1px solid rgba(211,227,255,.34);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.76);
+      cursor: pointer;
+      font-weight: 680;
+    }
+
+    .audio-actions .audio-listen {
+      border-color: rgba(255,255,255,.55);
+      background: rgba(224,228,255,.88);
+      color: #283785;
+      box-shadow: 0 0 24px rgba(185,189,255,.35);
+    }
+
+    .overlay.mode-guest {
+      padding: 0;
+      background: #070a18;
+      backdrop-filter: none;
+    }
+
+    .overlay.mode-guest .sheet {
+      min-height: 100%;
+      max-height: 100%;
+      padding: calc(env(safe-area-inset-top) + 58px) 0 24px;
+      border-radius: 0;
+      background: #070a18;
+      box-shadow: none;
+      overflow-y: auto;
+    }
+
+    .overlay.mode-guest .close {
+      z-index: 8;
+      top: calc(env(safe-area-inset-top) + 14px);
+      left: 16px;
+      right: auto;
+      background: rgba(255,255,255,.1);
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .overlay.mode-guest .demo-content {
+      min-height: 0;
+      margin: 0;
+      display: block;
+      overflow: visible;
+    }
+
+    .guest-video-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(7,10,28,.06), rgba(7,10,28,.62)),
+        url("assets/rooftop-cobalt-reference.png") center 28% / cover;
+      border-top: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+
+    .guest-video-stage::before {
+      content: "本期访谈";
+      position: absolute;
+      left: 14px;
+      top: 13px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(8,12,36,.48);
+      color: rgba(255,255,255,.78);
+      font-size: 9px;
+      letter-spacing: .08em;
+      backdrop-filter: blur(8px);
+    }
+
+    .guest-video-play {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 54px;
+      height: 54px;
+      border: 0;
+      border-radius: 50%;
+      color: #102459;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 10px 30px rgba(0,0,0,.3), 0 0 0 7px rgba(255,255,255,.1);
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    .guest-video-stage.playing .guest-video-play { opacity: .22; }
+
+    .guest-video-controls {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 10px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 9px;
+      color: rgba(255,255,255,.68);
+      font-size: 9px;
+    }
+
+    .guest-video-progress {
+      height: 3px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(255,255,255,.24);
+    }
+
+    .guest-video-progress i {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--cyan);
+      box-shadow: 0 0 8px rgba(54,234,255,.65);
+    }
+
+    .guest-video-stage.playing .guest-video-progress i { animation: videoProgress 80s linear forwards; }
+    @keyframes videoProgress { to { width: 100%; } }
+
+    .guest-video-info { padding: 15px 18px 0; }
+
+    .guest-video-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: rgba(255,255,255,.52);
+      font-size: 11px;
+    }
+
+    .guest-video-summary small { color: rgba(255,255,255,.3); font-size: 9px; }
+
+    .guest-video-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .guest-video-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #f2b87a, #4d7fc5 66%, #24306f);
+      box-shadow: 0 0 0 3px rgba(54,234,255,.07);
+    }
+
+    .guest-video-author span { display: flex; flex: 1; flex-direction: column; gap: 3px; }
+    .guest-video-author b { color: white; font-size: 13px; }
+    .guest-video-author small { color: rgba(255,255,255,.42); font-size: 10px; }
+    .guest-video-follow { border: 0; background: none; color: var(--cyan); font-size: 11px; cursor: pointer; }
+
+    .guest-video-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 13px;
+      padding-top: 11px;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+
+    .guest-video-actions button {
+      border: 0;
+      padding: 6px 0;
+      background: none;
+      color: rgba(255,255,255,.42);
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .guest-video-actions .liked { color: #ff8ca0; }
+
+    .fireworks-overlay {
+      position: absolute;
+      z-index: 100;
+      inset: 0;
+      visibility: hidden;
+      opacity: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(5,13,46,.05), rgba(5,10,39,.56)),
+        url("assets/rooftop-cobalt-reference.png") center top / auto 116%;
+      transition: opacity .45s ease, visibility .45s ease;
+    }
+
+    .fireworks-overlay.active { visibility: visible; opacity: 1; }
+
+    .fireworks-overlay::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 22% 22%, rgba(255,224,160,.2), transparent 20%),
+        radial-gradient(circle at 76% 18%, rgba(54,234,255,.16), transparent 24%),
+        linear-gradient(180deg, transparent 48%, rgba(4,8,31,.42));
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .fireworks-overlay.active::after { animation: skyFlash 3.2s ease-out .72s both; }
+
+    .launch-trail {
+      position: absolute;
+      z-index: 2;
+      bottom: 28%;
+      width: 2px;
+      height: 92px;
+      border-radius: 50%;
+      opacity: 0;
+      background: linear-gradient(0deg, transparent, rgba(255,245,206,.38) 38%, #fff9d9);
+      filter: drop-shadow(0 0 5px #ffd79d);
+      transform-origin: center bottom;
+    }
+
+    .launch-trail.t1 { left: 25%; }
+    .launch-trail.t2 { left: 72%; height: 112px; }
+    .launch-trail.t3 { left: 48%; height: 102px; }
+    .fireworks-overlay.active .launch-trail { animation: launchTrail .92s cubic-bezier(.34,.08,.55,1) both; }
+    .fireworks-overlay.active .launch-trail.t2 { animation-delay: .32s; }
+    .fireworks-overlay.active .launch-trail.t3 { animation-delay: .72s; }
+
+    .firework {
+      position: absolute;
+      z-index: 3;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff8d8;
+      box-shadow:
+        0 -78px 3px #fff7d7,
+        30px -70px 3px #ffd08e,
+        58px -52px 3px #70efff,
+        78px -12px 3px #fff3c4,
+        70px 31px 3px #ffbc79,
+        42px 65px 3px #63b9ff,
+        0 78px 3px #fff7d7,
+        -42px 65px 3px #a2f5ff,
+        -70px 31px 3px #ffd08e,
+        -78px -12px 3px #70efff,
+        -58px -52px 3px #fff3c4,
+        -30px -70px 3px #ffbc79;
+      filter: drop-shadow(0 0 5px rgba(255,244,197,.95));
+      mix-blend-mode: screen;
+      transform: scale(.05);
+      opacity: 0;
+    }
+
+    .firework::before {
+      content: "";
+      position: absolute;
+      inset: -28px;
+      border: 1px solid rgba(255,244,199,.48);
+      border-radius: 50%;
+      box-shadow: 0 0 14px rgba(54,234,255,.24), inset 0 0 12px rgba(255,211,145,.18);
+    }
+
+    .firework.f1 { left: 24%; top: 24%; }
+    .firework.f2 { left: 72%; top: 18%; }
+    .firework.f3 { left: 49%; top: 38%; }
+    .firework.f4 { left: 84%; top: 43%; transform: scale(.04); }
+    .firework.f5 { left: 13%; top: 48%; transform: scale(.035); }
+    .fireworks-overlay.active .firework { animation: explode 2.45s cubic-bezier(.16,.7,.24,1) infinite; }
+    .fireworks-overlay.active .firework.f1 { animation-delay: .78s; }
+    .fireworks-overlay.active .firework.f2 { animation-delay: 1.12s; }
+    .fireworks-overlay.active .firework.f3 { animation-delay: 1.58s; }
+    .fireworks-overlay.active .firework.f4 { animation-delay: 2.02s; }
+    .fireworks-overlay.active .firework.f5 { animation-delay: 2.42s; }
+
+    @keyframes explode {
+      0% { transform: scale(.04); opacity: 0; }
+      11% { opacity: 1; }
+      64% { opacity: .92; }
+      100% { transform: scale(1.08); opacity: 0; }
+    }
+
+    @keyframes launchTrail {
+      0% { opacity: 0; transform: translateY(120px) scaleY(.25); }
+      18% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-320px) scaleY(1); }
+    }
+
+    @keyframes skyFlash { 0%, 100% { opacity: 0; } 18% { opacity: .72; } 42% { opacity: .2; } }
+
+    .fireworks-presence {
+      position: absolute;
+      z-index: 5;
+      top: calc(env(safe-area-inset-top) + 18px);
+      left: 16px;
+      right: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    .fireworks-overlay.active .fireworks-presence { animation: presenceIn .55s ease-out .65s both; }
+    @keyframes presenceIn { to { opacity: 1; transform: translateY(0); } }
+
+    .presence-avatars { display: flex; padding-left: 7px; }
+    .presence-avatar {
+      width: 29px;
+      height: 29px;
+      margin-left: -7px;
+      border: 2px solid rgba(12,18,51,.92);
+      border-radius: 50%;
+      box-shadow: 0 2px 9px rgba(0,0,0,.3);
+    }
+    .presence-avatar.a1 {
+      background: radial-gradient(circle at 50% 36%, #603b51 0 21%, transparent 22%), radial-gradient(ellipse at 50% 92%, #7c3f6b 0 43%, transparent 44%), linear-gradient(145deg, #f4bd81, #b74f82);
+    }
+    .presence-avatar.a2 {
+      background: radial-gradient(circle at 50% 36%, #173b62 0 21%, transparent 22%), radial-gradient(ellipse at 50% 92%, #24538e 0 43%, transparent 44%), linear-gradient(145deg, #63d8e8, #3457a7);
+    }
+    .presence-avatar.a3 {
+      background: radial-gradient(circle at 50% 36%, #4b416f 0 21%, transparent 22%), radial-gradient(ellipse at 50% 92%, #6254a2 0 43%, transparent 44%), linear-gradient(145deg, #e9d59d, #6b65c8);
+    }
+    .presence-avatar.a4 {
+      background: radial-gradient(circle at 50% 36%, #6e3e56 0 21%, transparent 22%), radial-gradient(ellipse at 50% 92%, #315d9c 0 43%, transparent 44%), linear-gradient(145deg, #f29b91, #315d9c);
+    }
+    .presence-avatar.a5 {
+      background: radial-gradient(circle at 50% 36%, #345f61 0 21%, transparent 22%), radial-gradient(ellipse at 50% 92%, #4e4696 0 43%, transparent 44%), linear-gradient(145deg, #85d9bc, #4e4696);
+    }
+
+    .presence-copy { display: flex; flex: 1; flex-direction: column; gap: 2px; text-shadow: 0 2px 10px rgba(0,0,0,.5); }
+    .presence-copy b { color: white; font-size: 11px; }
+    .presence-copy small { color: rgba(255,255,255,.58); font-size: 9px; }
+    .presence-live {
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: rgba(255,112,128,.18);
+      color: #ffb5bc;
+      font-size: 8px;
+      font-style: normal;
+      font-weight: 850;
+      letter-spacing: .08em;
+    }
+
+    .fireworks-live {
+      position: absolute;
+      z-index: 5;
+      left: 16px;
+      right: 52px;
+      bottom: 158px;
+      height: 172px;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 7px;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 100%);
+      mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 100%);
+      pointer-events: none;
+    }
+
+    .live-note {
+      position: relative;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 100%;
+      padding: 6px 10px 6px 6px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      background: rgba(8,15,47,.54);
+      color: rgba(255,255,255,.78);
+      font-size: 10px;
+      backdrop-filter: blur(10px);
+      opacity: .96;
+      animation: liveFeedIn .42s cubic-bezier(.18,.82,.28,1) both;
+    }
+
+    .live-avatar {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 36%, #5c4251 0 21%, transparent 22%), radial-gradient(ellipse at 50% 92%, #4a68bd 0 43%, transparent 44%), linear-gradient(145deg, #f2b66f, #4a68bd);
+      border: 1px solid rgba(255,255,255,.48);
+    }
+
+    .live-note[data-tone="2"] .live-avatar { background: radial-gradient(circle at 50% 36%, #254d67 0 21%, transparent 22%), radial-gradient(ellipse at 50% 92%, #55429e 0 43%, transparent 44%), linear-gradient(145deg, #67d9dd, #55429e); }
+    .live-note[data-tone="3"] .live-avatar { background: radial-gradient(circle at 50% 36%, #6e4056 0 21%, transparent 22%), radial-gradient(ellipse at 50% 92%, #2c649d 0 43%, transparent 44%), linear-gradient(145deg, #f29a9f, #2c649d); }
+    .live-note:nth-child(2) { opacity: .82; }
+    .live-note:nth-child(3) { opacity: .66; }
+    .live-note:nth-child(4) { opacity: .48; }
+    .live-note:nth-child(n+5) { opacity: .28; }
+
+    @keyframes liveFeedIn {
+      from { opacity: 0; transform: translateY(15px) scale(.96); }
+      to { transform: translateY(0) scale(1); }
+    }
+
+    .fireworks-copy {
+      position: absolute;
+      z-index: 3;
+      left: 24px;
+      right: 24px;
+      bottom: 54px;
+      text-align: center;
+      text-shadow: 0 4px 22px rgba(0,0,0,.5);
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    .fireworks-overlay.active .fireworks-copy { animation: revealFireworksCopy .65s ease-out 8.6s both; }
+    @keyframes revealFireworksCopy { to { opacity: 1; transform: translateY(0); } }
+
+    .fireworks-copy h2 { margin: 0; font-size: 34px; line-height: 1.1; white-space: nowrap; }
+
+    .fireworks-actions { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+    .fireworks-actions button {
+      height: 40px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      color: white;
+      cursor: pointer;
+    }
+    .fireworks-actions .primary { background: white; color: #151040; font-weight: 760; }
+
+    .toast {
+      position: absolute;
+      z-index: 40;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 18px);
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(8,8,33,.82);
+      border: 1px solid rgba(54,234,255,.34);
+      color: white;
+      font-size: 11px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .28s ease;
+      white-space: nowrap;
+      box-shadow: 0 8px 24px rgba(0,0,0,.34);
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-height: 760px) {
+      .hero { height: 48%; }
+      .hero-copy { padding-top: 10px; }
+      h1 { font-size: 33px; }
+      .content-zone { top: 48%; padding-top: 89px; }
+      .content-zone > .progress-wrap { top: 8px; }
+      .zone-head { top: 60px; }
+      .phone.event-unlocked .content-zone { padding-top: 58px; }
+      .phone.event-unlocked .zone-head { top: 25px; }
+      .portal-label b { font-size: 21px; }
+      .tape .portal-label b, .guest .portal-label b { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="phone" aria-label="Soul 天台：天台未眠">
+    <section class="hero" id="heroTrigger" role="button" tabindex="0" aria-label="查看烟花蓄力规则">
+      <div class="shooting-dot"></div>
+      <header class="topbar">
+        <div class="top-actions">
+          <button class="icon-btn" data-stop-hero aria-label="分享">↗</button>
+          <button class="icon-btn" data-stop-hero aria-label="关闭">×</button>
+        </div>
+      </header>
+
+      <div class="hero-copy">
+        <h1>天台未眠</h1>
+        <div class="tagline" id="themeTagline">今晚，天台在等一场烟花。</div>
+      </div>
+
+      <div class="hero-firework-hint" id="heroFireworkHint" data-charge="" aria-hidden="true">
+        <span class="firework-orb">✦</span>
+        <span class="hero-firework-copy">
+          <b id="fireworkAction">烟花蓄力中 · 88%</b>
+          <small id="fireworkHint">喜欢、评论或聆听，添一束火花</small>
+        </span>
+        <span class="hero-firework-arrow">›</span>
+      </div>
+
+    </section>
+
+    <section class="content-zone">
+      <div class="progress-wrap" aria-label="天台全站共同进度">
+        <div class="progress-meta"><span id="progressCopy">18,646个人正在一起攒烟花</span><strong id="progressStatus">烟花准备度&nbsp; <span id="progressNum">88</span>%</strong></div>
+        <div class="progress-track"><div class="progress-value" id="progressValue"></div><div class="progress-star" id="progressStar"></div></div>
+      </div>
+      <div class="zone-head"><strong>今晚正在发生</strong><span>轻点一次，为烟花添一束火花</span></div>
+      <div class="portal-grid">
+        <button class="portal stories" data-type="story" data-title="未眠故事集" data-copy="睡不着的Ta们在想什么呢？">
+          <div class="story-paper">
+            <div class="avatar-row"><span class="avatar"></span>深夜十点以后</div>
+            <div class="paper-line"></div><div class="paper-line short"></div>
+          </div>
+          <span class="portal-label"><small>睡不着的Ta们在想什么呢？</small><b>未眠<br/>故事集</b></span>
+        </button>
+
+        <button class="portal tape" data-type="audio" data-title="晚安留声机" data-copy="随机听见一段还没睡的声音。">
+          <span class="record"></span>
+          <span class="wave"><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="portal-label"><small>听一段陌生人的声音</small><b>晚安留声机</b></span>
+        </button>
+
+        <button class="portal guest" data-type="guest" data-title="天台会客厅" data-copy="看一段今晚的来访与回答。">
+          <span class="guest-portrait"></span><span class="mini-play">▶</span>
+          <span class="portal-label"><small>本期来访</small><b>天台会客厅</b></span>
+        </button>
+      </div>
+    </section>
+
+    <div class="overlay" id="overlay" aria-hidden="true">
+      <div class="sheet">
+        <button class="close" id="closeSheet" aria-label="关闭">×</button>
+        <div class="demo-content" id="demoContent"></div>
+      </div>
+    </div>
+    <div class="toast" id="toast">你为今晚的烟花添了一束火花</div>
+
+    <div class="fireworks-overlay" id="fireworksOverlay" aria-hidden="true">
+      <i class="launch-trail t1"></i><i class="launch-trail t2"></i><i class="launch-trail t3"></i>
+      <i class="firework f1"></i><i class="firework f2"></i><i class="firework f3"></i><i class="firework f4"></i><i class="firework f5"></i>
+      <div class="fireworks-presence">
+        <div class="presence-avatars" aria-hidden="true">
+          <i class="presence-avatar a1"></i><i class="presence-avatar a2"></i><i class="presence-avatar a3"></i><i class="presence-avatar a4"></i><i class="presence-avatar a5"></i>
+        </div>
+        <span class="presence-copy"><b>18,646 人正在天台</b><small>一起看今晚的烟花</small></span>
+        <em class="presence-live">LIVE</em>
+      </div>
+      <div class="fireworks-live" id="fireworksLive" aria-live="polite"></div>
+      <div class="fireworks-copy">
+        <h2>烟花升空了</h2>
+        <div class="fireworks-actions">
+          <button class="primary" id="replayFireworks">再看一次</button>
+          <button id="closeFireworks">回到天台</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const progressNum = document.querySelector('#progressNum');
+    const progressValue = document.querySelector('#progressValue');
+    const progressStar = document.querySelector('#progressStar');
+    const toast = document.querySelector('#toast');
+    const progressCopy = document.querySelector('#progressCopy');
+    const progressStatus = document.querySelector('#progressStatus');
+    const themeTagline = document.querySelector('#themeTagline');
+    const heroTrigger = document.querySelector('#heroTrigger');
+    const heroFireworkHint = document.querySelector('#heroFireworkHint');
+    const fireworkAction = document.querySelector('#fireworkAction');
+    const fireworkHint = document.querySelector('#fireworkHint');
+    const fireworksOverlay = document.querySelector('#fireworksOverlay');
+    const fireworksLive = document.querySelector('#fireworksLive');
+    const phone = document.querySelector('.phone');
+    const overlay = document.querySelector('#overlay');
+    const demoContent = document.querySelector('#demoContent');
+    const closeSheet = document.querySelector('#closeSheet');
+    const EVENT_UNLOCKED_KEY = 'soul-rooftop-fireworks-unlocked-v4';
+    const EVENT_VIEWED_KEY = 'soul-rooftop-fireworks-viewed-v4';
+    let eventUnlocked = localStorage.getItem(EVENT_UNLOCKED_KEY) === 'true';
+    let hasViewedFireworks = localStorage.getItem(EVENT_VIEWED_KEY) === 'true';
+    let progress = eventUnlocked ? 100 : 88;
+    let toastTimer;
+    let viewedTimer;
+    let liveFeedTimer;
+    let liveFeedKickTimer;
+    let activeMediaTimer;
+    let pendingFireworks = false;
+
+    function syncProgress() {
+      progressNum.textContent = progress;
+      progressValue.style.width = `${progress}%`;
+      progressStar.style.left = `calc(${progress}% - 6px)`;
+      if (!eventUnlocked) {
+        fireworkAction.textContent = progress >= 96 ? '就差最后一束' : `烟花蓄力中 · ${progress}%`;
+        fireworkHint.textContent = '喜欢、评论或聆听，添一束火花';
+      }
+    }
+
+    function setCompletedUI() {
+      eventUnlocked = true;
+      progress = 100;
+      syncProgress();
+      progressCopy.textContent = '18,646个人一起完成了这场烟花';
+      progressStatus.innerHTML = '烟花已解锁&nbsp; <span id="progressNum">100</span>%';
+      phone.classList.add('event-unlocked');
+      themeTagline.textContent = hasViewedFireworks ? '今晚的烟花，可以随时回放。' : '全站烟花已经解锁。';
+      fireworkAction.textContent = hasViewedFireworks ? '回放今晚烟花' : '全站共同解锁';
+      fireworkHint.textContent = hasViewedFireworks ? '轻点主视觉，重新看见这一刻' : '点击观看今晚的烟花';
+      heroTrigger.classList.add('fireworks-ready');
+      heroTrigger.setAttribute('aria-label', '播放今晚烟花');
+    }
+
+    function contribute(amount = 2, message = '你为今晚的烟花添了一束火花') {
+      if (eventUnlocked) {
+        showToast('今晚烟花已解锁，轻点主视觉即可回放');
+        return;
+      }
+      progress = Math.min(100, progress + amount);
+      heroFireworkHint.dataset.charge = '+1束';
+      heroTrigger.classList.remove('charging');
+      void heroTrigger.offsetWidth;
+      heroTrigger.classList.add('charging');
+      setTimeout(() => heroTrigger.classList.remove('charging'), 760);
+      syncProgress();
+      showToast(message);
+      if (navigator.vibrate) navigator.vibrate(18);
+
+      if (progress === 100) {
+        eventUnlocked = true;
+        pendingFireworks = true;
+        localStorage.setItem(EVENT_UNLOCKED_KEY, 'true');
+        setCompletedUI();
+        if (overlay.classList.contains('open')) {
+          showToast('全站烟花已解锁，返回天台后观看');
+        } else {
+          setTimeout(() => {
+            pendingFireworks = false;
+            launchFireworks();
+          }, 850);
+        }
+      }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
+    }
+
+    function launchFireworks() {
+      pendingFireworks = false;
+      localStorage.setItem(EVENT_UNLOCKED_KEY, 'true');
+      setCompletedUI();
+      startLiveFeed();
+      fireworksOverlay.classList.add('active');
+      fireworksOverlay.setAttribute('aria-hidden', 'false');
+      if (navigator.vibrate) navigator.vibrate([18, 45, 24]);
+      clearTimeout(viewedTimer);
+      viewedTimer = setTimeout(markFireworksViewed, 10000);
+    }
+
+    const liveMessages = [
+      '阿眠发布了今晚的故事',
+      '小野刚刚留下了一条评论',
+      '晚风路过留下了一段声音',
+      '树洞菌回复了一个睡不着的人',
+      '岛屿听完了一段陌生人的声音',
+      '十七正在天台看烟花',
+      '椰子汽水喜欢了一篇故事',
+      '白桃听完了今晚的留声',
+      '凌晨三点加入了天台',
+      '小满评论：今晚也辛苦了'
+    ];
+
+    function pushLiveMoment() {
+      const note = document.createElement('div');
+      note.className = 'live-note';
+      note.dataset.tone = String(1 + Math.floor(Math.random() * 3));
+      note.innerHTML = `<i class="live-avatar"></i><span>${liveMessages[Math.floor(Math.random() * liveMessages.length)]}</span>`;
+      fireworksLive.prepend(note);
+      while (fireworksLive.children.length > 5) {
+        fireworksLive.lastElementChild.remove();
+      }
+    }
+
+    function startLiveFeed() {
+      clearInterval(liveFeedTimer);
+      clearTimeout(liveFeedKickTimer);
+      fireworksLive.innerHTML = '';
+      pushLiveMoment();
+      liveFeedKickTimer = setTimeout(pushLiveMoment, 420);
+      liveFeedTimer = setInterval(pushLiveMoment, 1100);
+    }
+
+    function markFireworksViewed() {
+      hasViewedFireworks = true;
+      localStorage.setItem(EVENT_VIEWED_KEY, 'true');
+      setCompletedUI();
+    }
+
+    function activateHeroFireworks() {
+      if (eventUnlocked) {
+        launchFireworks();
+        return;
+      }
+      showToast('喜欢、评论或聆听内容，都能添一束火花');
+    }
+
+    heroTrigger.addEventListener('click', (event) => {
+      if (event.target.closest('[data-stop-hero]')) return;
+      activateHeroFireworks();
+    });
+
+    heroTrigger.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      activateHeroFireworks();
+    });
+
+    const experiences = {
+      story: {
+        author: '树洞菌',
+        time: '23:48',
+        long: true,
+        line: '过了十点以后，城市像终于松了一口气。我坐在便利店门口，把今天没说出口的话一遍遍删掉。白天总觉得自己可以处理好所有事情，到了深夜才发现，情绪只是被暂时藏起来。其实也没有发生什么大事，只是突然很想有人问一句：你今天是不是有点累？可手机亮了又暗，最后还是我自己买了一瓶温牛奶，慢慢走回家。路上的风很轻，我想，也许长大就是学会一边难过，一边装作明天仍然值得期待。如果你也还没睡，希望你知道，今晚并不是只有你一个人被困在这些说不清的小情绪里。',
+        meta: '3分钟前',
+        action: '喜欢这个故事',
+        next: '换一个'
+      },
+      audio: {
+        tag: '00:26 · 今晚随机播放',
+        line: '“如果你也还醒着，希望这段声音能陪你一会儿。”',
+        meta: '来自一位陌生Soul用户',
+        action: '播放这段声音',
+        next: '下一段'
+      },
+      guest: {
+        tag: '本期来访 · 访谈片段',
+        line: '“你有没有一个只愿意在深夜回答的问题？”',
+        meta: '天台会客厅 · 01:20',
+        action: '播放访谈片段',
+        next: '换片段'
+      }
+    };
+
+    function renderExperience(type) {
+      const item = experiences[type];
+      if (type === 'audio') {
+        renderAudioExperience();
+        return;
+      }
+      if (type === 'guest') {
+        renderGuestVideoPage();
+        return;
+      }
+
+      demoContent.innerHTML = `
+        <div class="experience-visual ${item.long ? 'long' : ''}">
+          ${item.author ? `
+            <div class="experience-author">
+              <span class="experience-avatar" aria-hidden="true"></span>
+              <b>${item.author}</b>
+              <time>${item.time}</time>
+            </div>` : `<span class="experience-tag">${item.tag}</span>`}
+          <div class="experience-copy ${item.long ? 'long-story' : ''}">${item.line}</div>
+          <span class="experience-meta">${item.meta}</span>
+        </div>
+        <div class="experience-actions">
+          <button class="experience-action" type="button">♡ 喜欢</button>
+          <button class="experience-comment" type="button">◌ 评论</button>
+          <button class="experience-next" type="button">↻ 换一换</button>
+        </div>`;
+
+      const actionButton = demoContent.querySelector('.experience-action');
+      const commentButton = demoContent.querySelector('.experience-comment');
+      const nextButton = demoContent.querySelector('.experience-next');
+
+      actionButton.addEventListener('click', () => {
+        if (actionButton.classList.contains('done')) return;
+        actionButton.classList.add('done');
+        actionButton.textContent = '♥ 已喜欢';
+        contribute(4, '已为全站烟花添上一束火花');
+      });
+
+      commentButton.addEventListener('click', () => {
+        if (!commentButton.classList.contains('done')) {
+          commentButton.classList.add('done');
+          contribute(4, '评论入口已唤起，也为烟花添了一束火花');
+          return;
+        }
+        showToast('评论入口已唤起');
+      });
+
+      nextButton.addEventListener('click', () => {
+        const visual = demoContent.querySelector('.experience-visual');
+        visual.animate(
+          [{ opacity: .35, transform: 'translateX(8px)' }, { opacity: 1, transform: 'translateX(0)' }],
+          { duration: 260, easing: 'ease-out' }
+        );
+      });
+    }
+
+    function renderAudioExperience() {
+      const bars = [10,18,25,13,30,20,12,27,16,23,10,18,28,15,22,12,26,17,11]
+        .map((height) => `<i style="--bar:${height}px"></i>`)
+        .join('');
+
+      demoContent.innerHTML = `
+        <div class="audio-profile">
+          <span class="audio-avatar" aria-hidden="true"></span>
+          <b>晚风路过</b>
+          <time>3分钟前</time>
+          <div class="audio-tags"><span>上海</span><span>职场</span><span>有点迷茫</span></div>
+        </div>
+        <div class="audio-copy">
+          <p>今天开完会之后，突然觉得自己好像一直在努力，但也不知道到底在往哪走。</p>
+          <p>很想换工作，又怕只是从一个坑跳到另一个坑。</p>
+        </div>
+        <div class="audio-player">
+          <button class="audio-play" type="button" aria-label="播放声音">▶</button>
+          <div class="audio-waveform">${bars}</div>
+          <span class="audio-duration">00:28</span>
+        </div>
+        <div class="audio-swipe">‹ &nbsp; 左右滑动，听听别人的今晚 &nbsp; ›</div>
+        <div class="audio-actions">
+          <button class="audio-listen" type="button">听听今晚</button>
+          <button class="audio-record" type="button">留下我的声音</button>
+        </div>`;
+
+      const player = demoContent.querySelector('.audio-player');
+      const playButton = demoContent.querySelector('.audio-play');
+      const listenButton = demoContent.querySelector('.audio-listen');
+      const recordButton = demoContent.querySelector('.audio-record');
+
+      function toggleAudio() {
+        player.classList.toggle('playing');
+        playButton.textContent = player.classList.contains('playing') ? 'Ⅱ' : '▶';
+        if (player.classList.contains('playing') && !player.dataset.contributed) {
+          player.dataset.contributed = 'true';
+          contribute(4, '这段声音为今晚添了一束火花');
+        }
+      }
+
+      playButton.addEventListener('click', toggleAudio);
+      listenButton.addEventListener('click', toggleAudio);
+      recordButton.addEventListener('click', () => showToast('录音入口已唤起'));
+    }
+
+    function renderGuestVideoPage() {
+      demoContent.innerHTML = `
+        <div class="guest-video-stage">
+          <button class="guest-video-play" type="button" aria-label="播放访谈视频">▶</button>
+          <div class="guest-video-controls">
+            <span class="guest-video-time">00:00</span>
+            <span class="guest-video-progress"><i></i></span>
+            <span>01:20</span>
+          </div>
+        </div>
+        <div class="guest-video-info">
+          <div class="guest-video-summary"><span>天台会客厅 · 本期访谈</span><small>01:20</small></div>
+          <div class="guest-video-actions">
+            <button class="guest-video-like" type="button">♡ 喜欢</button>
+            <button class="guest-video-comment" type="button">◌ 评论</button>
+            <button class="guest-video-share" type="button">↗ 分享</button>
+          </div>
+        </div>`;
+
+      const stage = demoContent.querySelector('.guest-video-stage');
+      const playButton = demoContent.querySelector('.guest-video-play');
+      const time = demoContent.querySelector('.guest-video-time');
+      const likeButton = demoContent.querySelector('.guest-video-like');
+      let seconds = 0;
+
+      playButton.addEventListener('click', () => {
+        const playing = stage.classList.toggle('playing');
+        playButton.textContent = playing ? 'Ⅱ' : '▶';
+        clearInterval(activeMediaTimer);
+        if (playing) {
+          if (!stage.dataset.contributed) {
+            stage.dataset.contributed = 'true';
+            contribute(4, '观看访谈，也为烟花添了一束火花');
+          }
+          activeMediaTimer = setInterval(() => {
+            seconds = Math.min(80, seconds + 1);
+            time.textContent = `00:${String(seconds).padStart(2, '0')}`;
+            if (seconds === 80) clearInterval(activeMediaTimer);
+          }, 1000);
+        }
+      });
+
+      likeButton.addEventListener('click', () => {
+        if (likeButton.classList.contains('liked')) return;
+        likeButton.classList.add('liked');
+        likeButton.textContent = '♥ 已喜欢';
+        contribute(4, '已为全站烟花添上一束火花');
+      });
+
+      demoContent.querySelector('.guest-video-comment').addEventListener('click', () => showToast('评论入口已唤起'));
+      demoContent.querySelector('.guest-video-share').addEventListener('click', () => showToast('分享入口已唤起'));
+    }
+
+    document.querySelectorAll('.portal').forEach((portal) => {
+      portal.addEventListener('click', () => {
+        overlay.classList.remove('mode-story', 'mode-audio', 'mode-guest');
+        overlay.classList.add(`mode-${portal.dataset.type}`);
+        closeSheet.textContent = portal.dataset.type === 'guest' ? '‹' : '×';
+        closeSheet.setAttribute('aria-label', portal.dataset.type === 'guest' ? '返回' : '关闭');
+        renderExperience(portal.dataset.type);
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    function closeOverlay() {
+      clearInterval(activeMediaTimer);
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+      if (pendingFireworks) {
+        pendingFireworks = false;
+        showToast('今晚的烟花正在升空');
+        setTimeout(launchFireworks, 420);
+      }
+    }
+    closeSheet.addEventListener('click', closeOverlay);
+    overlay.addEventListener('click', (event) => { if (event.target === overlay) closeOverlay(); });
+
+    document.querySelector('#closeFireworks').addEventListener('click', () => {
+      clearInterval(liveFeedTimer);
+      clearTimeout(liveFeedKickTimer);
+      fireworksOverlay.classList.remove('active');
+      fireworksOverlay.setAttribute('aria-hidden', 'true');
+      markFireworksViewed();
+    });
+
+    document.querySelector('#replayFireworks').addEventListener('click', () => {
+      markFireworksViewed();
+      fireworksOverlay.classList.remove('active');
+      void fireworksOverlay.offsetWidth;
+      launchFireworks();
+    });
+
+    document.querySelectorAll('[data-stop-hero]').forEach((button) => {
+      button.addEventListener('click', () => {
+        showToast(button.getAttribute('aria-label') === '分享' ? '分享入口已唤起' : '已返回上一页');
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      if (fireworksOverlay.classList.contains('active')) {
+        document.querySelector('#closeFireworks').click();
+      } else {
+        closeOverlay();
+      }
+    });
+
+    syncProgress();
+    if (eventUnlocked) setCompletedUI();
+  </script>
+</body>
+</html>
