@@ -2435,10 +2435,9 @@
       return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}-${now.getHours()}`;
     })();
     const CYCLE_STATE_KEY = 'soul-rooftop-cycle-v7';
-    const storedCycle = (() => {
-      try { return JSON.parse(localStorage.getItem(CYCLE_STATE_KEY) || '{}'); }
-      catch { return {}; }
-    })();
+    // Demo 体验：每次刷新都从本轮蓄力态重新开始。
+    localStorage.removeItem(CYCLE_STATE_KEY);
+    const storedCycle = {};
 
     let progress = storedCycle.id === cycleId ? Number(storedCycle.progress || 88) : 88;
     let reserved = storedCycle.id === cycleId && Boolean(storedCycle.reserved);
